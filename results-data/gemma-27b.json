@@ -1,0 +1,702 @@
+[
+  {
+    "iteration": 10,
+    "trainLoss": 2.989,
+    "tokensPerSec": 104.277,
+    "peakMemory": 22.598,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 20,
+    "trainLoss": 1.892,
+    "tokensPerSec": 105.634,
+    "peakMemory": 24.811,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 30,
+    "trainLoss": 1.2,
+    "tokensPerSec": 99.082,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 40,
+    "trainLoss": 0.921,
+    "tokensPerSec": 93.741,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 50,
+    "trainLoss": 0.892,
+    "tokensPerSec": 85.754,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 60,
+    "trainLoss": 0.768,
+    "tokensPerSec": 90.847,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 70,
+    "trainLoss": 0.738,
+    "tokensPerSec": 88.946,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 80,
+    "trainLoss": 0.678,
+    "tokensPerSec": 88.426,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 90,
+    "trainLoss": 0.656,
+    "tokensPerSec": 89.1,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 100,
+    "trainLoss": 0.639,
+    "tokensPerSec": 86.339,
+    "peakMemory": 25.829,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 110,
+    "trainLoss": 0.558,
+    "tokensPerSec": 85.217,
+    "peakMemory": 25.838,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 120,
+    "trainLoss": 0.62,
+    "tokensPerSec": 76.814,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 130,
+    "trainLoss": 0.672,
+    "tokensPerSec": 91.756,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 140,
+    "trainLoss": 0.61,
+    "tokensPerSec": 81.81,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 150,
+    "trainLoss": 0.632,
+    "tokensPerSec": 85.151,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 160,
+    "trainLoss": 0.659,
+    "tokensPerSec": 89.952,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 170,
+    "trainLoss": 0.592,
+    "tokensPerSec": 80.151,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 180,
+    "trainLoss": 0.689,
+    "tokensPerSec": 84.807,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 190,
+    "trainLoss": 0.6,
+    "tokensPerSec": 86.736,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 200,
+    "trainLoss": 0.609,
+    "tokensPerSec": 84.573,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 210,
+    "trainLoss": 0.574,
+    "tokensPerSec": 86.774,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 220,
+    "trainLoss": 0.614,
+    "tokensPerSec": 95.393,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 230,
+    "trainLoss": 0.617,
+    "tokensPerSec": 82.481,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 240,
+    "trainLoss": 0.507,
+    "tokensPerSec": 89.712,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 250,
+    "trainLoss": 0.593,
+    "tokensPerSec": 82.963,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 260,
+    "trainLoss": 0.55,
+    "tokensPerSec": 86.809,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 270,
+    "trainLoss": 0.578,
+    "tokensPerSec": 78.328,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 280,
+    "trainLoss": 0.543,
+    "tokensPerSec": 85.923,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 290,
+    "trainLoss": 0.571,
+    "tokensPerSec": 88.459,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 300,
+    "trainLoss": 0.562,
+    "tokensPerSec": 89.182,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 310,
+    "trainLoss": 0.55,
+    "tokensPerSec": 86.176,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 320,
+    "trainLoss": 0.596,
+    "tokensPerSec": 90.894,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 330,
+    "trainLoss": 0.549,
+    "tokensPerSec": 82.111,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 340,
+    "trainLoss": 0.563,
+    "tokensPerSec": 85.758,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 350,
+    "trainLoss": 0.575,
+    "tokensPerSec": 85.031,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 360,
+    "trainLoss": 0.507,
+    "tokensPerSec": 87.847,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 370,
+    "trainLoss": 0.566,
+    "tokensPerSec": 87.113,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 380,
+    "trainLoss": 0.584,
+    "tokensPerSec": 89.439,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 390,
+    "trainLoss": 0.57,
+    "tokensPerSec": 89.036,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 400,
+    "trainLoss": 0.524,
+    "tokensPerSec": 85.595,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 410,
+    "trainLoss": 0.553,
+    "tokensPerSec": 87.82,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 420,
+    "trainLoss": 0.555,
+    "tokensPerSec": 85.533,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 430,
+    "trainLoss": 0.605,
+    "tokensPerSec": 82.445,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 440,
+    "trainLoss": 0.605,
+    "tokensPerSec": 84.985,
+    "peakMemory": 28.94,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 450,
+    "trainLoss": 0.552,
+    "tokensPerSec": 79.991,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 460,
+    "trainLoss": 0.578,
+    "tokensPerSec": 86.995,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 470,
+    "trainLoss": 0.559,
+    "tokensPerSec": 83.736,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 480,
+    "trainLoss": 0.476,
+    "tokensPerSec": 84.235,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 490,
+    "trainLoss": 0.609,
+    "tokensPerSec": 88.844,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 500,
+    "trainLoss": 0.536,
+    "tokensPerSec": 86.064,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 510,
+    "trainLoss": 0.575,
+    "tokensPerSec": 86.937,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 520,
+    "trainLoss": 0.572,
+    "tokensPerSec": 84.027,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 530,
+    "trainLoss": 0.501,
+    "tokensPerSec": 88.629,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 540,
+    "trainLoss": 0.496,
+    "tokensPerSec": 83.456,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 550,
+    "trainLoss": 0.487,
+    "tokensPerSec": 92.298,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 560,
+    "trainLoss": 0.498,
+    "tokensPerSec": 86.64,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 570,
+    "trainLoss": 0.535,
+    "tokensPerSec": 85.182,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 580,
+    "trainLoss": 0.522,
+    "tokensPerSec": 81.981,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 590,
+    "trainLoss": 0.493,
+    "tokensPerSec": 79.587,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 600,
+    "trainLoss": 0.559,
+    "tokensPerSec": 79.03,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 610,
+    "trainLoss": 0.561,
+    "tokensPerSec": 88.093,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 620,
+    "trainLoss": 0.486,
+    "tokensPerSec": 82.31,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 630,
+    "trainLoss": 0.48,
+    "tokensPerSec": 80.784,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 640,
+    "trainLoss": 0.501,
+    "tokensPerSec": 79.934,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 650,
+    "trainLoss": 0.474,
+    "tokensPerSec": 81.473,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 660,
+    "trainLoss": 0.482,
+    "tokensPerSec": 93.453,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 670,
+    "trainLoss": 0.497,
+    "tokensPerSec": 83.005,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 680,
+    "trainLoss": 0.456,
+    "tokensPerSec": 84.898,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 690,
+    "trainLoss": 0.488,
+    "tokensPerSec": 85.808,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 700,
+    "trainLoss": 0.527,
+    "tokensPerSec": 85.236,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 710,
+    "trainLoss": 0.521,
+    "tokensPerSec": 85.773,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 720,
+    "trainLoss": 0.516,
+    "tokensPerSec": 84.008,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 730,
+    "trainLoss": 0.464,
+    "tokensPerSec": 88.553,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 740,
+    "trainLoss": 0.509,
+    "tokensPerSec": 87.394,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 750,
+    "trainLoss": 0.462,
+    "tokensPerSec": 84.209,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 760,
+    "trainLoss": 0.473,
+    "tokensPerSec": 84.847,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 770,
+    "trainLoss": 0.517,
+    "tokensPerSec": 82.239,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 780,
+    "trainLoss": 0.529,
+    "tokensPerSec": 87.361,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 790,
+    "trainLoss": 0.501,
+    "tokensPerSec": 89.728,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 800,
+    "trainLoss": 0.482,
+    "tokensPerSec": 84.372,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 810,
+    "trainLoss": 0.499,
+    "tokensPerSec": 89.572,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 820,
+    "trainLoss": 0.385,
+    "tokensPerSec": 86.422,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 830,
+    "trainLoss": 0.468,
+    "tokensPerSec": 76.281,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 840,
+    "trainLoss": 0.561,
+    "tokensPerSec": 82.782,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 850,
+    "trainLoss": 0.51,
+    "tokensPerSec": 86.535,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 860,
+    "trainLoss": 0.503,
+    "tokensPerSec": 82.751,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 870,
+    "trainLoss": 0.493,
+    "tokensPerSec": 85.071,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 880,
+    "trainLoss": 0.452,
+    "tokensPerSec": 81.823,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 890,
+    "trainLoss": 0.482,
+    "tokensPerSec": 88.496,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 900,
+    "trainLoss": 0.471,
+    "tokensPerSec": 77.887,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 910,
+    "trainLoss": 0.482,
+    "tokensPerSec": 81.335,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 920,
+    "trainLoss": 0.492,
+    "tokensPerSec": 89.974,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 930,
+    "trainLoss": 0.525,
+    "tokensPerSec": 83.093,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 940,
+    "trainLoss": 0.479,
+    "tokensPerSec": 86.308,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 950,
+    "trainLoss": 0.498,
+    "tokensPerSec": 85.927,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 960,
+    "trainLoss": 0.488,
+    "tokensPerSec": 85.783,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 970,
+    "trainLoss": 0.513,
+    "tokensPerSec": 84.937,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 980,
+    "trainLoss": 0.518,
+    "tokensPerSec": 77.817,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 990,
+    "trainLoss": 0.464,
+    "tokensPerSec": 89.286,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  },
+  {
+    "iteration": 1000,
+    "trainLoss": 0.452,
+    "tokensPerSec": 86.218,
+    "peakMemory": 30.077,
+    "model": "llama-3.2-27b-it-qat-4bit"
+  }
+]
