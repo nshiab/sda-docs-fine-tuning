@@ -1,14 +1,13 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@nshiab/journalism@1": "1.34.2",
+    "jsr:@nshiab/journalism@1": "1.34.6",
     "jsr:@nshiab/journalism@1.34.2": "1.34.2",
-    "jsr:@nshiab/journalism@^1.34.2": "1.34.2",
-    "jsr:@nshiab/simple-data-analysis@^5.6.30": "5.6.30",
+    "jsr:@nshiab/journalism@^1.34.6": "1.34.6",
+    "jsr:@nshiab/simple-data-analysis@^5.6.31": "5.6.31",
     "npm:@duckdb/node-api@1.3.2-alpha.26": "1.3.2-alpha.26",
     "npm:@google-cloud/storage@^7.17.0": "7.17.0",
     "npm:@google/genai@^1.16.0": "1.16.0",
-    "npm:@observablehq/plot@0": "0.6.17",
     "npm:@observablehq/plot@~0.6.17": "0.6.17",
     "npm:@types/d3-geo@3": "3.1.0",
     "npm:@types/node@*": "24.2.0",
@@ -24,6 +23,7 @@
     "npm:google-auth-library@9": "9.15.1",
     "npm:google-spreadsheet@4": "4.1.5_google-auth-library@9.15.1",
     "npm:iconv-lite@0.6": "0.6.3",
+    "npm:jsonrepair@^3.13.0": "3.13.0",
     "npm:jstat@^1.9.6": "1.9.6",
     "npm:ollama@~0.5.17": "0.5.17",
     "npm:playwright-chromium@^1.55.0": "1.55.0"
@@ -34,8 +34,6 @@
       "dependencies": [
         "npm:@google-cloud/storage",
         "npm:@google/genai",
-        "npm:@observablehq/plot@~0.6.17",
-        "npm:@types/d3-geo",
         "npm:adm-zip",
         "npm:cheerio",
         "npm:d3-array",
@@ -53,15 +51,37 @@
         "npm:playwright-chromium"
       ]
     },
-    "@nshiab/simple-data-analysis@5.6.30": {
-      "integrity": "2a09996204fd1c8f5c1978cf11ad3360ce2c6112f62052ac4c61868336f7e8cc",
+    "@nshiab/journalism@1.34.6": {
+      "integrity": "d967748a8aa4eb6e1bde9068999666fa50a4cc1f2483f643c23924291282bed2",
+      "dependencies": [
+        "npm:@google-cloud/storage",
+        "npm:@google/genai",
+        "npm:@observablehq/plot",
+        "npm:@types/d3-geo",
+        "npm:adm-zip",
+        "npm:cheerio",
+        "npm:d3-array",
+        "npm:d3-dsv@3",
+        "npm:d3-dsv@^3.0.1",
+        "npm:d3-geo",
+        "npm:date-fns-tz",
+        "npm:fflate",
+        "npm:geotiff",
+        "npm:google-auth-library",
+        "npm:google-spreadsheet",
+        "npm:iconv-lite",
+        "npm:jsonrepair",
+        "npm:jstat",
+        "npm:ollama",
+        "npm:playwright-chromium"
+      ]
+    },
+    "@nshiab/simple-data-analysis@5.6.31": {
+      "integrity": "56927bb39b53eee8880af398f49d7e55f866470e8d4744a10c89b77729269f9a",
       "dependencies": [
         "jsr:@nshiab/journalism@1",
         "jsr:@nshiab/journalism@1.34.2",
-        "npm:@duckdb/node-api",
-        "npm:@observablehq/plot@0",
-        "npm:@types/d3-geo",
-        "npm:ollama"
+        "npm:@duckdb/node-api"
       ]
     }
   },
@@ -825,6 +845,10 @@
         "bignumber.js"
       ]
     },
+    "jsonrepair@3.13.0": {
+      "integrity": "sha512-5YRzlAQ7tuzV1nAJu3LvDlrKtBFIALHN2+a+I1MGJCt3ldRDBF/bZuvIPzae8Epot6KBXd0awRZZcuoeAsZ/mw==",
+      "bin": true
+    },
     "jstat@1.9.6": {
       "integrity": "sha512-rPBkJbK2TnA8pzs93QcDDPlKcrtZWuuCo2dVR0TFLOJSxhqfWOVCSp8aV3/oSbn+4uY4yw1URtLpHQedtmXfug=="
     },
@@ -1066,8 +1090,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@nshiab/journalism@^1.34.2",
-      "jsr:@nshiab/simple-data-analysis@^5.6.30",
+      "jsr:@nshiab/journalism@^1.34.6",
+      "jsr:@nshiab/simple-data-analysis@^5.6.31",
       "npm:@observablehq/plot@~0.6.17"
     ]
   }

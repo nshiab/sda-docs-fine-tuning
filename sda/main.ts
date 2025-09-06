@@ -1,9 +1,16 @@
 import { askAI, DurationTracker, prettyDuration } from "@nshiab/journalism";
 import { existsSync } from "node:fs";
 
-const models = ["qwen3:30b", "gemma3:27b", "deepseek-r1:32b"];
-const nbQuestions = 10;
+const models = ["gpt-oss:20b", "qwen3:30b", "gemma3:27b", "deepseek-r1:32b"];
 const sample = 0; // 0 for all
+const roles = [
+  "junior developer",
+  "senior developer",
+  "data analyst",
+  "data journalist",
+];
+
+const verbose = true;
 
 const start = new Date();
 
@@ -36,7 +43,9 @@ const SimpleDBMethods = sdaDocs.split("## class SimpleDB")[1].split(
   "### Methods",
 )[1].split(
   "## class SimpleTable",
-)[0].split("\n#### ").map((d) => "\n#### " + d.trim());
+)[0].split("\n#### ").filter((d) => d.trim() !== "").map((d) =>
+  "\n#### " + d.trim()
+);
 
 const SimpleTableIntro = "## class SimpleTable\n" +
   sdaDocs.split("## class SimpleTable")[1].split("### Methods")[0].trim();
@@ -44,7 +53,9 @@ const SimpleTableMethods = sdaDocs.split("## class SimpleTable")[1].split(
   "### Methods",
 )[1].split(
   "## class SimpleView",
-)[0].split("\n#### ").map((d) => "\n#### " + d.trim());
+)[0].split("\n#### ").filter((d) => d.trim() !== "").map((d) =>
+  "\n#### " + d.trim()
+);
 
 console.log("\nMethods for SDA");
 console.log("SimpleDBMethods:", SimpleDBMethods.length);
@@ -66,7 +77,7 @@ console.log("\nAll chuncks for SDA:", documentationChunksSda.length);
 console.log("\n3 - Generating the training data...");
 
 const tracker = new DurationTracker(
-  models.length * documentationChunksSda.length,
+  models.length * documentationChunksSda.length * roles.length,
   {
     prefix: "Estimated time remaining: ",
     suffix: " until completion.",
@@ -78,122 +89,177 @@ const trainData: { question: string; answer: string }[] = [];
 const missingPrompts: { model: string; prompt: string }[] = [];
 for (const model of models) {
   for (const chunk of documentationChunksSda) {
-    const startChunkModel = new Date();
-    console.log(
-      `\n${i} / ${models.length * documentationChunksSda.length} - ${model} `,
-    );
-    i++;
-    tracker.start();
-    const prompt =
-      `Your task is to generate a set of up to ${nbQuestions} relevant questions and answers based on the provided section of documentation. The questions should be those a junior developer or data analyst might have.
+    for (const role of roles) {
+      const startChunkModel = new Date();
+      console.log(
+        `\n${i} / ${
+          models.length * documentationChunksSda.length * roles.length
+        } - ${model} - ${role}`,
+      );
+      i++;
+      tracker.start();
+      const prompt =
+        `Your task is to generate a list of relevant questions and answers based on the provided section of documentation. The documentation is for the Simple Data Analysis library, a TypeScript library. The questions should be those a ${role} might have.
 
-For each question, you must provide a code example as the answer. You can add comments to the code to explain the steps. A brief, one-sentence explanation may be included in a comment if the code alone is not a sufficient answer.
+The questions must be directly related to the documentation section provided and must not ask about topics outside its scope. Your list of questions should cover all key aspects of the documentation section.
 
-The questions must be directly related to the documentation section provided below and must not ask about topics outside its scope. The answer should be grounded in the documentation provided. Do not make assumptions.
+For each question, you must provide a code example as your answer. You must add comments to the code to explain the steps. You must also add a brief, one-sentence explanation before the code example.
+
+The answer should be grounded in the documentation provided. Do not make assumptions. Do not invent features or methods that do not exist.
 
 Write simple and straightforward code examples. Don't create functions to encapsulate your code.
 
-Your answers should always be wrapped in triple backticks (\`\`\`ts at the beginning and \`\`\` at the end) for code blocks.
+Your code examples should always be wrapped in triple backticks (\`\`\` at the beginning and \`\`\` at the end) for code blocks.
 
-If the documentation section is about SimpleDB, make sure to wrap your answer with:
-\`\`\`ts
+If the documentation section is about SimpleDB, make sure to wrap your code example with:
+\`\`\`
 import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
 const sdb = new SimpleDB();
-[PUT THE CODE EXAMPLE HERE. IF THERE IS NO CODE TO ADD, JUST ADD A COMMENT SAYING "Do your magic here!"]
+[PUT YOUR CODE EXAMPLE HERE]
+// We close everything
 await sdb.done();
 \`\`\`
 
-If the documentation section is about SimpleTable, make sure to wrap your answer with:
-\`\`\`ts
-import { SimpleDB } from "@nshiab/simple-data-analysis";
-const sdb = new SimpleDB();
-const table = sdb.newTable();
-await table.loadData("path/to/your/data.csv"); // Remove this line if not needed or change the file extension if relevant
-[PUT THE CODE EXAMPLE HERE. IF THERE IS NO CODE TO ADD, JUST ADD A COMMENT SAYING "Do your magic here!"]
-await sdb.done();
+If the documentation section is about SimpleTable, make sure to wrap your code example with:
 \`\`\`
-
-If you need inspiration, here is a comprehensive example with comments.
-\`\`\`ts
+// We start a SimpleDB instance
 import { SimpleDB } from "@nshiab/simple-data-analysis";
-
-// We start a SimpleDB instance.
 const sdb = new SimpleDB();
-
 // We create a new table
-const fires = sdb.newTable("fires");
-// We fetch the wildfires data. It's a csv.
-await fires.loadData(
-  "data/firesCanada2023.csv",
-);
-
-// We summarize to count the number of fires
-// and sum up the area burnt in each province.
-await fires.summarize({
-  values: "hectares",
-  categories: "province",
-  summaries: ["count", "sum"],
-  decimals: 0,
-});
-// We rename columns.
-await fires.renameColumns({
-  count: "nbFires",
-  sum: "burntArea",
-});
-// We want the province with
-// the greatest burnt area first.
-await fires.sort({ burntArea: "desc" });
-
-// We log the results. By default, the method
-// logs the first 10 rows, but there is 13
-// rows in our data. We also log the data types.
-await fires.logTable({ nbRowsToLog: 13, types: true });
-
-// And we can write the data to a parquet, json or csv file.
-await fires.writeData("./fires.parquet");
-
-// We close everything.
+const table = sdb.newTable();
+[PUT YOUR CODE EXAMPLE HERE]
+// We close everything
 await sdb.done();
 \`\`\`
 
-Return your response as a JSON object with the following structure:
-{
-  "data": [
-    { "question": "question1", "answer": "answer1" },
-    { "question": "question2", "answer": "answer2" },
-    ...
-  ]
-}
+If the example requires data, load it using \`await table.loadData("path/to/your/data.csv");\` or \`await table.loadGeoData("path/to/your/geodata.geojson");\` for geospatial data.
 
-Here's the documentation section:
+Do not forget to add \`await sdb.done();\` at the end of your code.
+
+Here are a few complete question-and-answer examples.
+
+Question: How can I open my file sales.csv and see the first few rows?
+Answer example:
+Here's how you can load a CSV file and log the first rows:
+\`\`\`
+import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
+const sdb = new SimpleDB();
+// We create a new table
+const table = sdb.newTable("myTable");
+// We load data from the file
+await table.loadData("./sales.csv");
+// We log the first rows
+await table.logTable();
+// We close everything
+await sdb.done();
+\`\`\`
+
+Question: I want to aggregate my data. Which method should I use?
+Answer example:
+You should use the \`summarize\` method. Here's an example:
+\`\`\`
+import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
+const sdb = new SimpleDB();
+// We create a new table
+const table = sdb.newTable("myTable");
+// We load data from the file
+// Let's assume the data has columns "price" and "product"
+await table.loadData("./my-data.csv");
+// We summarize to count the number of items sold
+// and sum up the total sales for each product
+await table.summarize({
+  values: "price",
+  categories: "product",
+  summaries: ["count", "sum"],
+  decimals: 2,
+});
+// We log the results
+await table.logTable();
+// We close everything
+await sdb.done();
+\`\`\`
+
+Question: I want to simplify my geospatial data.
+Answer example:
+You can use the \`simplify\` method. Here's an example:
+\`\`\`
+import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
+const sdb = new SimpleDB();
+// We create a new table
+const table = sdb.newTable("geoTable");
+// We load geospatial data from a file
+await table.loadGeoData("./my-geodata.geojson");
+// We simplify the geospatial data with a tolerance of 0.01
+await table.simplify(0.01);
+// We log the first rows to see the simplified data
+await table.logTable();
+// We close everything
+await sdb.done();
+\`\`\`
+
+Return the questions and answers as a JSON object with the following structure:
+{ "data": [ { "question": "question1", "answer": "answer1" }, { "question": "question2", "answer": "answer2" }, ... ] }
+
+Make extra sure to return a valid JSON object. Return the JSON object only. Do not add any other text.
+
+Keep it simple and straightforward. Do not think too much.
+
+Here's the documentation section you need to work from:
 
 ${chunk}`;
 
-    try {
-      const data = (await askAI(
-        prompt,
-        {
-          //   verbose: true,
-          cache: true,
-          ollama: true,
-          returnJson: true,
-          contextWindow: 40_000,
-          model,
-        },
-      )) as { data: { question: string; answer: string }[] };
+      let data: { data: { question: string; answer: string }[] } = { data: [] };
+      try {
+        if (model.includes("gemma")) {
+          // Non-thinking model
+          data = (await askAI(
+            prompt,
+            {
+              verbose,
+              cache: true,
+              ollama: true,
+              contextWindow: 40_000,
+              model,
+              returnJson: true,
+            },
+          )) as { data: { question: string; answer: string }[] };
+        } else {
+          // Thinking model
+          // For some reason, the JSON return doesn't work well with thinking
+          data = await askAI(
+            prompt,
+            {
+              verbose,
+              cache: true,
+              ollama: true,
+              contextWindow: 40_000,
+              model,
+              thinkingBudget: 1,
+              returnJson: false,
+              parseJson: true,
+            },
+          ) as { data: { question: string; answer: string }[] };
+        }
 
-      //   console.log(data.data);
-      trainData.push(
-        ...(data.data),
-      );
-    } catch (_error) {
-      missingPrompts.push({ model, prompt });
+        console.log(`Received ${data.data.length} Q&A pairs.`);
+
+        trainData.push(
+          ...(data.data),
+        );
+      } catch (error) {
+        console.log(error);
+        missingPrompts.push({ model, prompt });
+      }
+      prettyDuration(startChunkModel, {
+        log: true,
+        prefix: "Iteration took ",
+      });
+      tracker.log();
     }
-    prettyDuration(startChunkModel, {
-      log: true,
-      prefix: "Iteration took ",
-    });
-    tracker.log();
   }
 }
 
@@ -225,11 +291,11 @@ const trainDataMlX = trainData.map(({ question, answer }) => ({
 // Shuffle the data
 shuffleArray(trainDataMlX);
 
-// Split: 90% train, 10% valid, 0% test
+// Split: 95% train, 5% valid, 0% test
 // No sure how to test for now
 const total = trainDataMlX.length;
-const trainCount = Math.floor(total * 0.9);
-const validCount = Math.floor(total * 0.1);
+const trainCount = Math.floor(total * 0.95);
+const validCount = Math.floor(total * 0.05);
 
 const trainSet = trainDataMlX.slice(0, trainCount);
 const validSet = trainDataMlX.slice(trainCount, trainCount + validCount);
