@@ -9,37 +9,19 @@ import {
   textX,
 } from "@observablehq/plot";
 
-// In seconds
-const trainingDurations = [{
-  model: "gemma-3-270m",
-  duration: 105,
-}, {
-  model: "gemma-3-1b",
-  duration: 314,
-}, {
-  model: "llama-3.2-1b",
-  duration: 496,
-}, {
-  model: "llama-3.2-3b",
-  duration: 1050,
-}, {
-  model: "gemma-3-4b",
-  duration: 1205,
-}, {
-  model: "llama-3.1-8b",
-  duration: 2186,
-}, {
-  model: "llama-3.1-12b",
-  duration: 3159,
-}, {
-  model: "llama-3.1-27b",
-  duration: 6625,
-}];
+const toReplace = {
+  "-it-qat-4bit": "",
+  "-it-4bit": "",
+  "-Instruct-4bit": "",
+  "mlx-community/": "",
+};
 
 const sdb = new SimpleDB();
 
 const durations = sdb.newTable("durations");
-await durations.loadArray(trainingDurations);
+await durations.loadData("results-data/durations.json");
+await durations.replace("model", toReplace);
+await durations.updateColumn("duration", `ROUND(duration / 1000)`); // Convert ms to sec
 await durations.writeChart((data) =>
   plot({
     x: {
@@ -72,13 +54,10 @@ await durations.logTable();
 
 // Training loss results
 const trainingLoss = await sdb.newTable("trainingLoss").loadData(
-  "results-data/*.json",
+  "results-data/trainLoss.json",
 );
-await trainingLoss.replace("model", {
-  "-it-qat-4bit": "",
-  "-it-4bit": "",
-  "-Instruct-4bit": "",
-});
+await trainingLoss.removeMissing({ columns: ["trainLoss"] });
+await trainingLoss.replace("model", toReplace);
 await trainingLoss.writeChart((data) =>
   plot({
     y: {

@@ -5,13 +5,38 @@ This repository is used to fine-tune models on the
 documentation using [mlx-lm](https://github.com/ml-explore/mlx-lm), a Python
 package optimized for Apple silicon computers.
 
+## Prerequisites
+
+Before running the training scripts, you need to install the Python package
+[mlx-lm](https://github.com/ml-explore/mlx-lm):
+
+```bash
+pip3 install mlx-lm
+```
+
+And the training dependencies:
+
+```bash
+pip3 install "mlx-lm[train]"
+```
+
+## Available Commands
+
+This project provides several Deno tasks for different stages of the workflow:
+
+- `deno task generate` - Generate training data from SDA documentation
+- `deno task train` - Train models with automatic loss tracking
+- `deno task charts` - Generate visualization charts
+- `deno task all` - Run the complete pipeline (generate → train → charts)
+- `deno task clean` - Clean cache directories
+
 ## Generating training data
 
 > [!TIP]
 > If you are only interested in training models, skip this section. All the
 > training data is already in the repository.
 
-To generate the training data, the `sda/main.ts` script fetches the latest
+To generate the training data, the `sda/generate.ts` script fetches the latest
 documentation and then generates questions and answers with several open-weight
 models using [Ollama](https://ollama.com/).
 
@@ -19,71 +44,108 @@ To run the script, you need to install Ollama and download the models first. If
 the models specified at the top of the script are too large, feel free to change
 them to smaller ones.
 
-To run it with Deno:
+To generate training data:
 
-```
-deno task sda
+```bash
+deno task generate
 ```
 
 You can see the training data in `sda/output`.
 
 ## Training models
 
-To fine-tune the models, you need to install the Python package
-[mlx-lm](https://github.com/ml-explore/mlx-lm):
+The training process has been automated and enhanced with several features:
 
-```
-pip3 install mlx-lm
-```
+### Automated Training with Loss Tracking
 
-And the training dependencies:
+To train models with automatic loss tracking and accurate timing:
 
-```
-pip3 install "mlx-lm[train]"
+```bash
+deno task train
 ```
 
-Now, models from the
-[MLX Community on Hugging Face](https://huggingface.co/mlx-community/models) can
-be downloaded and fine-tuned using this command:
+This command will:
 
+1. **Pre-download models** to ensure accurate timing measurements
+2. **Train each model** specified in `sda/train.ts`
+3. **Capture iteration losses** automatically during training
+4. **Save results** to multiple output files
+
+### What gets generated automatically:
+
+- `results-data/durations.json` - Training duration for each model
+- `results-data/trainLoss.json` - Complete iteration loss data for all models
+
+### Configuring models to train
+
+Edit the `models` array in `sda/train.ts` to specify which models to train:
+
+```typescript
+const models = [
+  "mlx-community/gemma-3-270m-it-4bit",
+  "mlx-community/gemma-3-1b-it-4bit",
+  // Add more models here...
+];
 ```
-time python3 -m mlx_lm.lora \
---model mlx-community/gemma-3-270m-it-4bit \
---train \
---data sda/output
+
+## Loss Data Structure
+
+The `results-data/trainLoss.json` file contains an array of objects with the
+following structure:
+
+```json
+{
+  "iteration": 10,
+  "trainLoss": 3.825,
+  "valLoss": 4.951,
+  "learningRate": 0.00001,
+  "tokensPerSec": 5682.672,
+  "trainedTokens": 4779,
+  "model": "mlx-community/gemma-3-270m-it-4bit"
+}
 ```
 
-This command uses the default parameters. For more information on the available
-options, see: https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/LORA.md
+This data is automatically captured during training and can be used for analysis
+and visualization.
 
-The `time` command will tell you how long the training took.
+## Generating Charts
 
-Once training is done, you can update `sda/charts.ts` with your model and the
-training duration to generate the `results-data/durations.png` chart.
+Once training is complete, generate visualization charts:
 
-To retrieve the iteration statistics, you can copy and paste the terminal output
-into your favorite LLM and ask it to restructure it as a JSON array of objects
-with at least the keys `iteration`, `model`, and `trainLoss`. Put the JSON file
-into the `results-data/` folder. The JSON files in this folder are used by
-`sda/charts.ts` to create `results-data/trainLoss.png`.
-
-To create the charts, run this command with Deno:
-
-```
+```bash
 deno task charts
 ```
 
-Once all the terminal output is retrieved, you can manually test prompts with
-this command:
+This creates:
 
-```
+- `results-data/durations.png` - Training duration comparison chart
+- `results-data/trainLoss.png` - Training loss progression chart
+
+## Testing Models
+
+After training, you can test your fine-tuned models:
+
+```bash
 python3 -m mlx_lm.generate \
     --model mlx-community/gemma-3-270m-it-4bit \
-    --adapter-path adapters \
+    --adapter-path adapters/gemma-3-270m-it-4bit \
     --prompt "How can I open a CSV file?"
 ```
 
-You can then manually add the results of these prompts to
-`results-data/tests.md`.
+You can manually add the results of these prompts to `results-data/tests.md`.
+
+## Complete Workflow
+
+To run the entire pipeline from data generation to chart creation:
+
+```bash
+deno task all
+```
+
+This will:
+
+1. Generate training data from SDA documentation
+2. Train all specified models with loss tracking
+3. Generate visualization charts
 
 Have fun!

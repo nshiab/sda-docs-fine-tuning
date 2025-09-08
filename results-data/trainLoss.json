@@ -1,0 +1,92 @@
+[
+  {
+    "iteration": 1,
+    "valLoss": 4.861,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 10,
+    "trainLoss": 3.762,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6112.07,
+    "trainedTokens": 4772,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 20,
+    "trainLoss": 2.418,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5689.137,
+    "trainedTokens": 9544,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 30,
+    "trainLoss": 1.784,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6067.177,
+    "trainedTokens": 14644,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 40,
+    "trainLoss": 1.596,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5959.112,
+    "trainedTokens": 19563,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 50,
+    "trainLoss": 1.432,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6285.723,
+    "trainedTokens": 24632,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 60,
+    "trainLoss": 1.206,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6515.681,
+    "trainedTokens": 29632,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 70,
+    "trainLoss": 1.291,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6213.918,
+    "trainedTokens": 34537,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 80,
+    "trainLoss": 1.176,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5847.316,
+    "trainedTokens": 39321,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 90,
+    "trainLoss": 1.071,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6186.661,
+    "trainedTokens": 44183,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 100,
+    "valLoss": 1.057,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  },
+  {
+    "iteration": 100,
+    "trainLoss": 1.092,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6091.484,
+    "trainedTokens": 48924,
+    "model": "mlx-community/gemma-3-270m-it-4bit"
+  }
+]
