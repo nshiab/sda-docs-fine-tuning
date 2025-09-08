@@ -1,92 +1,272 @@
 [
   {
     "iteration": 1,
-    "valLoss": 4.861,
+    "valLoss": 4.425,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 10,
+    "trainLoss": 3.416,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5836.59,
+    "trainedTokens": 4971,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 20,
+    "trainLoss": 2.233,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5900.735,
+    "trainedTokens": 9897,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 30,
+    "trainLoss": 1.735,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5942.914,
+    "trainedTokens": 14512,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 40,
+    "trainLoss": 1.467,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5656.075,
+    "trainedTokens": 19202,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 50,
+    "trainLoss": 1.245,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5884.733,
+    "trainedTokens": 24055,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 60,
+    "trainLoss": 1.167,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5937.522,
+    "trainedTokens": 28964,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 70,
+    "trainLoss": 1.013,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6038.469,
+    "trainedTokens": 33893,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 80,
+    "trainLoss": 1.019,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5624.553,
+    "trainedTokens": 38625,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 90,
+    "trainLoss": 0.952,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5834.87,
+    "trainedTokens": 43447,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 100,
+    "valLoss": 0.87,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 100,
+    "trainLoss": 1.017,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5658.759,
+    "trainedTokens": 48246,
+    "model": "mlx-community/gemma-3-270m-it-bf16"
+  },
+  {
+    "iteration": 1,
+    "valLoss": 4.423,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 10,
+    "trainLoss": 3.428,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6030.358,
+    "trainedTokens": 4971,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 20,
+    "trainLoss": 2.229,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6118.426,
+    "trainedTokens": 9897,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 30,
+    "trainLoss": 1.723,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6268.608,
+    "trainedTokens": 14512,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 40,
+    "trainLoss": 1.459,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5928.135,
+    "trainedTokens": 19202,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 50,
+    "trainLoss": 1.242,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6088.831,
+    "trainedTokens": 24055,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 60,
+    "trainLoss": 1.161,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6017.1,
+    "trainedTokens": 28964,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 70,
+    "trainLoss": 1.01,
+    "learningRate": 0.00001,
+    "tokensPerSec": 6020.341,
+    "trainedTokens": 33893,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 80,
+    "trainLoss": 1.018,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5533.315,
+    "trainedTokens": 38625,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 90,
+    "trainLoss": 0.952,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5701.603,
+    "trainedTokens": 43447,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 100,
+    "valLoss": 0.869,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 100,
+    "trainLoss": 1.015,
+    "learningRate": 0.00001,
+    "tokensPerSec": 5348.501,
+    "trainedTokens": 48246,
+    "model": "mlx-community/gemma-3-270m-it-8bit"
+  },
+  {
+    "iteration": 1,
+    "valLoss": 4.819,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 10,
-    "trainLoss": 3.762,
+    "trainLoss": 3.725,
     "learningRate": 0.00001,
-    "tokensPerSec": 6112.07,
-    "trainedTokens": 4772,
+    "tokensPerSec": 6092.004,
+    "trainedTokens": 4971,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 20,
-    "trainLoss": 2.418,
+    "trainLoss": 2.415,
     "learningRate": 0.00001,
-    "tokensPerSec": 5689.137,
-    "trainedTokens": 9544,
+    "tokensPerSec": 6190.58,
+    "trainedTokens": 9897,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 30,
-    "trainLoss": 1.784,
+    "trainLoss": 1.917,
     "learningRate": 0.00001,
-    "tokensPerSec": 6067.177,
-    "trainedTokens": 14644,
+    "tokensPerSec": 6331.206,
+    "trainedTokens": 14512,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 40,
-    "trainLoss": 1.596,
+    "trainLoss": 1.66,
     "learningRate": 0.00001,
-    "tokensPerSec": 5959.112,
-    "trainedTokens": 19563,
+    "tokensPerSec": 5993.956,
+    "trainedTokens": 19202,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 50,
-    "trainLoss": 1.432,
+    "trainLoss": 1.379,
     "learningRate": 0.00001,
-    "tokensPerSec": 6285.723,
-    "trainedTokens": 24632,
+    "tokensPerSec": 6165.355,
+    "trainedTokens": 24055,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 60,
-    "trainLoss": 1.206,
+    "trainLoss": 1.311,
     "learningRate": 0.00001,
-    "tokensPerSec": 6515.681,
-    "trainedTokens": 29632,
+    "tokensPerSec": 6221.148,
+    "trainedTokens": 28964,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 70,
-    "trainLoss": 1.291,
+    "trainLoss": 1.143,
     "learningRate": 0.00001,
-    "tokensPerSec": 6213.918,
-    "trainedTokens": 34537,
+    "tokensPerSec": 6382.538,
+    "trainedTokens": 33893,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 80,
-    "trainLoss": 1.176,
+    "trainLoss": 1.116,
     "learningRate": 0.00001,
-    "tokensPerSec": 5847.316,
-    "trainedTokens": 39321,
+    "tokensPerSec": 6044.137,
+    "trainedTokens": 38625,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 90,
-    "trainLoss": 1.071,
+    "trainLoss": 1.046,
     "learningRate": 0.00001,
-    "tokensPerSec": 6186.661,
-    "trainedTokens": 44183,
+    "tokensPerSec": 6330.632,
+    "trainedTokens": 43447,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 100,
-    "valLoss": 1.057,
+    "valLoss": 0.957,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   },
   {
     "iteration": 100,
-    "trainLoss": 1.092,
+    "trainLoss": 1.124,
     "learningRate": 0.00001,
-    "tokensPerSec": 6091.484,
-    "trainedTokens": 48924,
+    "tokensPerSec": 5745.715,
+    "trainedTokens": 48246,
     "model": "mlx-community/gemma-3-270m-it-4bit"
   }
 ]

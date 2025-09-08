@@ -10,9 +10,6 @@ import {
 } from "@observablehq/plot";
 
 const toReplace = {
-  "-it-qat-4bit": "",
-  "-it-4bit": "",
-  "-Instruct-4bit": "",
   "mlx-community/": "",
 };
 
@@ -28,7 +25,7 @@ await durations.writeChart((data) =>
       ticks: 0,
       label: null,
     },
-    marginLeft: 125,
+    marginLeft: 175,
     marginRight: 100,
     marks: [
       barX(data, {
@@ -66,7 +63,7 @@ await trainingLoss.writeChart((data) =>
     },
     grid: true,
     inset: 10,
-    marginRight: 100,
+    marginRight: 175,
     height: 600,
     marks: [
       line(data, {

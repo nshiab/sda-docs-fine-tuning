@@ -66,10 +66,11 @@ deno task train
 
 This command will:
 
-1. **Pre-download models** to ensure accurate timing measurements
-2. **Train each model** specified in `sda/train.ts`
-3. **Capture iteration losses** automatically during training
-4. **Save results** to multiple output files
+1. **Clean adapters directory** to ensure a fresh start
+2. **Pre-download models** to ensure accurate timing measurements
+3. **Train each model** specified in `sda/train.ts`
+4. **Capture iteration losses** automatically during training
+5. **Save results** to multiple output files
 
 ### What gets generated automatically:
 

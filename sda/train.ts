@@ -1,8 +1,12 @@
 import trainModel from "./helpers/trainModel.ts";
 import downloadModel from "./helpers/downloadModel.ts";
+import cleanAdapters from "./helpers/cleanAdapters.ts";
 
 const models = [
-  "mlx-community/gemma-3-270m-it-4bit",
+  "mlx-community/gemma-3-270m-it-8bit",
+  "mlx-community/gemma-3-1b-it-8bit",
+  "mlx-community/gemma-3-4b-it-8bit",
+  "mlx-community/gemma-3-12b-it-8bit",
 ];
 
 const trainingResults: { model: string; duration: number }[] = [];
@@ -15,6 +19,9 @@ const allIterationLosses: {
   trainedTokens?: number;
   model?: string;
 }[] = [];
+
+// Clean adapters directory before starting
+await cleanAdapters();
 
 // Pre-download all models first
 console.log("🚀 Pre-downloading models to ensure accurate timing...\n");

@@ -64,5 +64,5 @@ export default async function downloadModel(model: string) {
     throw new Error(`Model download failed for ${model}`);
   }
 
-  console.log(`✅ Model downloaded: ${model}\n`);
+  console.log(`✅ Model downloaded: ${model}`);
 }

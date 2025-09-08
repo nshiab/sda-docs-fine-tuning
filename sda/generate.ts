@@ -5,7 +5,7 @@ import generateTrainingData from "./helpers/generateTrainingData.ts";
 import prepDataforMLX from "./helpers/prepDataforMLX.ts";
 
 const models = ["gpt-oss:20b", "qwen3:30b", "gemma3:27b", "deepseek-r1:32b"];
-const sample = 10; // 0 for all
+const sample = 0; // 0 for all
 const roles = [
   "junior developer",
   "senior developer",
