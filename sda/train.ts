@@ -1,6 +1,9 @@
 import trainModel from "./helpers/trainModel.ts";
 import downloadModel from "./helpers/downloadModel.ts";
 import cleanAdapters from "./helpers/cleanAdapters.ts";
+import { prettyDuration } from "@nshiab/journalism";
+
+const start = Date.now();
 
 const models = [
   "mlx-community/gemma-3-270m-it-8bit",
@@ -72,3 +75,7 @@ await Deno.writeTextFile(
   JSON.stringify(allIterationLosses, null, 2),
 );
 console.log("📊 All iteration losses saved to results-data/trainLoss.json");
+
+console.log(
+  `\n🎉 All training done! Total time: ${prettyDuration(start)}\n`,
+);
