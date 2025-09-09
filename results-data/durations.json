@@ -1,14 +1,18 @@
 [
   {
-    "model": "mlx-community/gemma-3-270m-it-bf16",
-    "duration": 10765
-  },
-  {
     "model": "mlx-community/gemma-3-270m-it-8bit",
-    "duration": 10727
+    "duration": 728321
   },
   {
-    "model": "mlx-community/gemma-3-270m-it-4bit",
-    "duration": 10393
+    "model": "mlx-community/gemma-3-1b-it-8bit",
+    "duration": 2192494
+  },
+  {
+    "model": "mlx-community/gemma-3-4b-it-8bit",
+    "duration": 7653120
+  },
+  {
+    "model": "mlx-community/gemma-3-12b-it-8bit",
+    "duration": 20068602
   }
 ]

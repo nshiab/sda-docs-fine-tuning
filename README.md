@@ -28,13 +28,8 @@ This project provides several Deno tasks for different stages of the workflow:
 - `deno task train` - Train models with automatic loss tracking
 - `deno task charts` - Generate visualization charts
 - `deno task all` - Run the complete pipeline (generate → train → charts)
-- `deno task clean` - Clean cache directories
 
 ## Generating training data
-
-> [!TIP]
-> If you are only interested in training models, skip this section. All the
-> training data is already in the repository.
 
 To generate the training data, the `sda/generate.ts` script fetches the latest
 documentation and then generates questions and answers with several open-weight
@@ -52,30 +47,53 @@ deno task generate
 
 You can see the training data in `sda/output`.
 
+> [!NOTE]
+> The generate script automatically checks if training data already exists at
+> `sda/output/trainingData.json`. If the file exists, it will skip the
+> generation process. The training data is committed.
+
 ## Training models
 
-The training process has been automated and enhanced with several features:
+The training process has been automated and enhanced with several intelligent
+features:
 
-### Automated Training with Loss Tracking
+### Smart Training with Resumption Support
 
-To train models with automatic loss tracking and accurate timing:
+To train models with automatic loss tracking, resumption support, and accurate
+timing:
 
 ```bash
 deno task train
 ```
 
-This command will:
+This command provides intelligent training management:
 
-1. **Clean adapters directory** to ensure a fresh start
-2. **Pre-download models** to ensure accurate timing measurements
-3. **Train each model** specified in `sda/train.ts`
-4. **Capture iteration losses** automatically during training
-5. **Save results** to multiple output files
+1. **Loads existing results** from previous training runs
+2. **Checks for already-trained models** by examining adapter files
+3. **Skips completed models** automatically to avoid duplicate work
+4. **Pre-downloads only needed models** to ensure accurate timing measurements
+5. **Trains each remaining model** specified in `sda/train.ts`
+6. **Captures iteration losses** automatically during training
+7. **Updates results** without creating duplicates
+
+### Resumption and Duplicate Prevention
+
+The training system now intelligently handles interruptions and reruns:
+
+- **Automatic model detection**: Checks if `adapters.safetensors` and
+  `adapter_config.json` exist
+- **Safe resumption**: Skips already-trained models and continues with remaining
+  ones
+- **No duplicate data**: Prevents accumulation of duplicate entries in result
+  files
+- **Preserves existing results**: Loads and maintains previous training data
 
 ### What gets generated automatically:
 
-- `results-data/durations.json` - Training duration for each model
+- `results-data/durations.json` - Training duration for each model (no
+  duplicates)
 - `results-data/trainLoss.json` - Complete iteration loss data for all models
+  (deduplicated)
 
 ### Configuring models to train
 
@@ -83,11 +101,15 @@ Edit the `models` array in `sda/train.ts` to specify which models to train:
 
 ```typescript
 const models = [
-  "mlx-community/gemma-3-270m-it-4bit",
-  "mlx-community/gemma-3-1b-it-4bit",
-  // Add more models here...
+  "mlx-community/gemma-3-270m-it-8bit",
+  "mlx-community/gemma-3-1b-it-8bit",
+  "mlx-community/gemma-3-4b-it-8bit",
+  "mlx-community/gemma-3-12b-it-8bit",
 ];
 ```
+
+The system will automatically detect which models have already been trained and
+skip them on subsequent runs.
 
 ## Loss Data Structure
 
@@ -102,12 +124,13 @@ following structure:
   "learningRate": 0.00001,
   "tokensPerSec": 5682.672,
   "trainedTokens": 4779,
-  "model": "mlx-community/gemma-3-270m-it-4bit"
+  "model": "mlx-community/gemma-3-270m-it-8bit"
 }
 ```
 
 This data is automatically captured during training and can be used for analysis
-and visualization.
+and visualization. The system prevents duplicate entries when rerunning
+training.
 
 ## Generating Charts
 
@@ -128,8 +151,8 @@ After training, you can test your fine-tuned models:
 
 ```bash
 python3 -m mlx_lm.generate \
-    --model mlx-community/gemma-3-270m-it-4bit \
-    --adapter-path adapters/gemma-3-270m-it-4bit \
+    --model mlx-community/gemma-3-270m-it-8bit \
+    --adapter-path adapters/gemma-3-270m-it-8bit \
     --prompt "How can I open a CSV file?"
 ```
 
@@ -145,8 +168,11 @@ deno task all
 
 This will:
 
-1. Generate training data from SDA documentation
-2. Train all specified models with loss tracking
+1. Generate training data from SDA documentation (skipped if already exists)
+2. Train all specified models with smart resumption and loss tracking
 3. Generate visualization charts
+
+The entire pipeline is designed to be resumable and will skip completed steps
+automatically.
 
 Have fun!

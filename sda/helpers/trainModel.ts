@@ -1,7 +1,24 @@
+import { existsSync } from "node:fs";
+
 export default async function trainModel(
   model: string,
 ) {
   const adapterPath = `adapters/${model.split("/").pop()}`;
+
+  // Check if model has already been trained
+  const adaptersFile = `${adapterPath}/adapters.safetensors`;
+  const configFile = `${adapterPath}/adapter_config.json`;
+
+  if (existsSync(adaptersFile) && existsSync(configFile)) {
+    console.log(
+      `\nModel ${model} has already been trained. Skipping training.`,
+    );
+    console.log(`Adapter files found at: ${adapterPath}`);
+    return []; // Return empty losses array since no training occurred
+  }
+
+  console.log(`\nAdapter files not found for ${model}. Starting training...`);
+
   const losses: {
     iteration: number;
     trainLoss?: number;
@@ -23,7 +40,7 @@ export default async function trainModel(
       "--adapter-path",
       adapterPath,
       "--iters",
-      "100",
+      "5000",
     ],
     stdout: "piped",
     stderr: "piped",

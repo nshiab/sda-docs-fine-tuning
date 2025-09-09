@@ -1,4 +1,5 @@
 import { prettyDuration } from "@nshiab/journalism";
+import { existsSync } from "node:fs";
 import fetchDocumentation from "./helpers/fetchDocumentation.ts";
 import breakDownDocumentation from "./helpers/breakDownDocumentation.ts";
 import generateTrainingData from "./helpers/generateTrainingData.ts";
@@ -17,27 +18,45 @@ const verbose = false;
 
 const start = new Date();
 
-// First, we grab the latest documentation
-const sdaDocs = await fetchDocumentation();
+const trainingDataPath = "./sda/output/trainingData.json";
 
-// Then we break down the documentation
-const documentationChunksSda = breakDownDocumentation(sdaDocs, sample);
+// Check if training data already exists
+if (existsSync(trainingDataPath)) {
+  console.log("\nTraining data already exists. Skipping generation...");
 
-// Now we generate the training data
-const trainingData = await generateTrainingData(
-  models,
-  documentationChunksSda,
-  roles,
-  verbose,
-);
+  // Load existing training data
+  const existingData = JSON.parse(await Deno.readTextFile(trainingDataPath));
+  prepDataforMLX(existingData);
 
-// We restructure the training data and split it for mlx
-const trainingDataMLX = prepDataforMLX(trainingData);
+  console.log("\n*** Done (using existing data) ***");
+  prettyDuration(start, { log: true, prefix: "Duration: " });
 
-console.log("\n*** Done ***");
-prettyDuration(start, { log: true, prefix: "Duration: " });
-console.log(
-  `${
-    ((Date.now() - start.getTime()) / 1000 / trainingDataMLX.length).toFixed(3)
-  } seconds per question.`,
-);
+  Deno.exit(0);
+} else {
+  // First, we grab the latest documentation
+  const sdaDocs = await fetchDocumentation();
+
+  // Then we break down the documentation
+  const documentationChunksSda = breakDownDocumentation(sdaDocs, sample);
+
+  // Now we generate the training data
+  const trainingData = await generateTrainingData(
+    models,
+    documentationChunksSda,
+    roles,
+    verbose,
+  );
+
+  // We restructure the training data and split it for mlx
+  const trainingDataMLX = prepDataforMLX(trainingData);
+
+  console.log("\n*** Done ***");
+  prettyDuration(start, { log: true, prefix: "Duration: " });
+  console.log(
+    `${
+      ((Date.now() - start.getTime()) / 1000 / trainingDataMLX.length).toFixed(
+        3,
+      )
+    } seconds per question.`,
+  );
+}
