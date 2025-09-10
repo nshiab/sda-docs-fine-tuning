@@ -26,9 +26,48 @@ const testQuestions: TestQuestion[] = [
     keyword: ["summarize"],
   },
   {
+    question: "I want to remove duplicates on the column 'email'.",
+    keyword: ["removeDuplicates"],
+  },
+  {
+    question: "Is there a way to calculate correlations between columns?",
+    keyword: ["correlations"],
+  },
+  {
+    question: "Give an example of a join between two tables.",
+    keyword: ["join"],
+  },
+  {
+    question: "How to filter rows by a condition?",
+    keyword: ["filter", "keep", "remove"],
+  },
+  {
+    question: "How can I rename the column 'Temperature (°C)' to 'temp'?",
+    keyword: ["renameColumns"],
+  },
+  {
+    question: "How to sort the data by the column 'date' in descending order?",
+    keyword: ["sort"],
+  },
+  {
+    question:
+      "How to calculate the moving average of the column 'sales' with a window of 7 days?",
+    keyword: ["roll"],
+  },
+  {
     question:
       "How can I open a geojson file and fix the errors in its geometries?",
     keyword: ["fixGeo"],
+  },
+  {
+    question:
+      "I have a table with points and another one with polygons. How can I join the points with the polygons they fall into?",
+    keyword: ["joinGeo"],
+  },
+  {
+    question:
+      "Show me how to simplify the geometries in the column 'location'.",
+    keyword: ["simplify"],
   },
   {
     question:
