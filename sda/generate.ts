@@ -13,10 +13,19 @@ const roles = [
   "data analyst",
   "data journalist",
 ];
+const trainingDataPerc = 0.95;
+const validationDataPerc = 0.05;
+// const testDataPerc = 0.0; // We don't test with mlx-lm
 
 const verbose = false;
 
 const start = new Date();
+
+// First, we grab the latest documentation
+const sdaDocs = await fetchDocumentation();
+
+// Then we break down the documentation
+const documentationChunksSda = breakDownDocumentation(sdaDocs, sample);
 
 const trainingDataPath = "./sda/output/trainingData.json";
 
@@ -26,19 +35,17 @@ if (existsSync(trainingDataPath)) {
 
   // Load existing training data
   const existingData = JSON.parse(await Deno.readTextFile(trainingDataPath));
-  prepDataforMLX(existingData);
+  prepDataforMLX(
+    existingData,
+    trainingDataPerc,
+    validationDataPerc,
+  );
 
-  console.log("\n*** Done (using existing data) ***");
+  console.log("\nDone (using existing data)");
   prettyDuration(start, { log: true, prefix: "Duration: " });
 
   Deno.exit(0);
 } else {
-  // First, we grab the latest documentation
-  const sdaDocs = await fetchDocumentation();
-
-  // Then we break down the documentation
-  const documentationChunksSda = breakDownDocumentation(sdaDocs, sample);
-
   // Now we generate the training data
   const trainingData = await generateTrainingData(
     models,
@@ -48,9 +55,13 @@ if (existsSync(trainingDataPath)) {
   );
 
   // We restructure the training data and split it for mlx
-  const trainingDataMLX = prepDataforMLX(trainingData);
+  const trainingDataMLX = prepDataforMLX(
+    trainingData,
+    trainingDataPerc,
+    validationDataPerc,
+  );
 
-  console.log("\n*** Done ***");
+  console.log("\nDone");
   prettyDuration(start, { log: true, prefix: "Duration: " });
   console.log(
     `${

@@ -1,178 +1,158 @@
 # Fine-tuning models with SDA documentation
 
-This repository is used to fine-tune models on the
+This project uses **Deno** (a TypeScript runtime) and **mlx-lm** (a Python
+package optimized for Apple Silicon chips) to train AI models using the
 [Simple Data Analysis](https://github.com/nshiab/simple-data-analysis)
-documentation using [mlx-lm](https://github.com/ml-explore/mlx-lm), a Python
-package optimized for Apple silicon computers.
+documentation.
 
-## Prerequisites
+## What you need first
 
-Before running the training scripts, you need to install the Python package
-[mlx-lm](https://github.com/ml-explore/mlx-lm):
+Install these tools before you start:
 
-```bash
-pip3 install mlx-lm
-```
+1. **Deno** - [Get it here](https://deno.com/)
+2. **Python package mlx-lm**:
+   ```bash
+   pip3 install mlx-lm
+   pip3 install "mlx-lm[train]"
+   ```
+3. **Ollama** - [Get it here](https://ollama.com/)
 
-And the training dependencies:
+## Step 1: Create Training Data
 
-```bash
-pip3 install "mlx-lm[train]"
-```
+First, we need to create training data from the SDA documentation. This step
+takes the documentation and creates question-answer pairs using AI.
 
-## Available Commands
-
-This project provides several Deno tasks for different stages of the workflow:
-
-- `deno task generate` - Generate training data from SDA documentation
-- `deno task train` - Train models with automatic loss tracking
-- `deno task charts` - Generate visualization charts
-- `deno task all` - Run the complete pipeline (generate → train → charts)
-
-## Generating training data
-
-To generate the training data, the `sda/generate.ts` script fetches the latest
-documentation and then generates questions and answers with several open-weight
-models using [Ollama](https://ollama.com/).
-
-To run the script, you need to install Ollama and download the models first. If
-the models specified at the top of the script are too large, feel free to change
-them to smaller ones.
-
-To generate training data:
+**Run this command:**
 
 ```bash
 deno task generate
 ```
 
-You can see the training data in `sda/output`.
+**What happens:**
 
-> [!NOTE]
-> The generate script automatically checks if training data already exists at
-> `sda/output/trainingData.json`. If the file exists, it will skip the
-> generation process. The training data is committed.
+1. Downloads the latest Simple Data Analysis documentation
+2. Splits the documentation into smaller pieces
+3. Uses AI models to create questions and answers
+4. Saves everything in a format ready for training
 
-## Training models
+**Files are saved here:**
 
-The training process has been automated and enhanced with several intelligent
-features:
+- Documentation: `sda/data/sdaDocs.md`
+- Training data: `sda/output/trainingData.json`
+- If these files already exist, this step is skipped
 
-### Smart Training with Resumption Support
+**Files created:**
 
-To train models with automatic loss tracking, resumption support, and accurate
-timing:
+- `sda/output/trainingData.json` - All the question-answer pairs
+- `sda/output/train.jsonl` - Training data for the AI
+- `sda/output/valid.jsonl` - Validation data for the AI
+- `sda/output/test.jsonl` - Test data for the AI
+
+## Step 2: Train the AI Models
+
+Now we train several AI models using our training data.
+
+**Run this command:**
 
 ```bash
 deno task train
 ```
 
-This command provides intelligent training management:
+**What happens:**
 
-1. **Loads existing results** from previous training runs
-2. **Checks for already-trained models** by examining adapter files
-3. **Skips completed models** automatically to avoid duplicate work
-4. **Pre-downloads only needed models** to ensure accurate timing measurements
-5. **Trains each remaining model** specified in `sda/train.ts`
-6. **Captures iteration losses** automatically during training
-7. **Updates results** without creating duplicates
+1. Checks what models are already trained (skips those)
+2. Downloads any new models that need training
+3. Trains each model and tracks how well it's learning
+4. Saves the results
 
-### Resumption and Duplicate Prevention
+**Files are saved here:**
 
-The training system now intelligently handles interruptions and reruns:
+- Training durations: `results-data/durations.json`
+- Learning progress: `results-data/trainLoss.json`
+- Already-trained models are skipped automatically
 
-- **Automatic model detection**: Checks if `adapters.safetensors` and
-  `adapter_config.json` exist
-- **Safe resumption**: Skips already-trained models and continues with remaining
-  ones
-- **No duplicate data**: Prevents accumulation of duplicate entries in result
-  files
-- **Preserves existing results**: Loads and maintains previous training data
+**Files created:**
 
-### What gets generated automatically:
+- `adapters/{model-name}/adapters.safetensors` - The trained model
+- `adapters/{model-name}/adapter_config.json` - Model settings
+- `results-data/durations.json` - How long each model took to train
+- `results-data/trainLoss.json` - How well each model learned
 
-- `results-data/durations.json` - Training duration for each model (no
-  duplicates)
-- `results-data/trainLoss.json` - Complete iteration loss data for all models
-  (deduplicated)
+## Step 3: Create Charts
 
-### Configuring models to train
+After training, create visual charts showing training progress and durations.
 
-Edit the `models` array in `sda/train.ts` to specify which models to train:
-
-```typescript
-const models = [
-  "mlx-community/gemma-3-270m-it-8bit",
-  "mlx-community/gemma-3-1b-it-8bit",
-  "mlx-community/gemma-3-4b-it-8bit",
-  "mlx-community/gemma-3-12b-it-8bit",
-];
-```
-
-The system will automatically detect which models have already been trained and
-skip them on subsequent runs.
-
-## Loss Data Structure
-
-The `results-data/trainLoss.json` file contains an array of objects with the
-following structure:
-
-```json
-{
-  "iteration": 10,
-  "trainLoss": 3.825,
-  "valLoss": 4.951,
-  "learningRate": 0.00001,
-  "tokensPerSec": 5682.672,
-  "trainedTokens": 4779,
-  "model": "mlx-community/gemma-3-270m-it-8bit"
-}
-```
-
-This data is automatically captured during training and can be used for analysis
-and visualization. The system prevents duplicate entries when rerunning
-training.
-
-## Generating Charts
-
-Once training is complete, generate visualization charts:
+**Run this command:**
 
 ```bash
 deno task charts
 ```
 
-This creates:
+**What happens:**
 
-- `results-data/durations.png` - Training duration comparison chart
-- `results-data/trainLoss.png` - Training loss progression chart
+1. Reads the training loss and duration data
+2. Creates charts showing how well models learned over time
+3. Creates charts showing how long each model took to train
+4. Saves the charts as image files
 
-## Testing Models
+**Files created:**
 
-After training, you can test your fine-tuned models:
+- `results-data/trainLoss.png` - Chart showing learning progress
+- `results-data/durations.png` - Chart showing training times
+
+## Step 4: Test How Good the Models Are
+
+After creating charts, we test all the models to see which ones give the best
+answers.
+
+**Run this command:**
 
 ```bash
-python3 -m mlx_lm.generate \
-    --model mlx-community/gemma-3-270m-it-8bit \
-    --adapter-path adapters/gemma-3-270m-it-8bit \
-    --prompt "How can I open a CSV file?"
+deno task test
 ```
 
-You can manually add the results of these prompts to `results-data/tests.md`.
+**What happens:**
 
-## Complete Workflow
+1. Finds all the trained models
+2. Asks each model the same test questions
+3. Uses other AI models to score the answers
+4. Creates a report showing which models are best
 
-To run the entire pipeline from data generation to chart creation:
+**Files are saved here:**
+
+- Model answers: `results-data/fine-tuned-model-responses.json`
+- If the answers already exist, testing is skipped
+
+**Files created:**
+
+- `results-data/tests.json` - Detailed results with scores and explanations
+- `results-data/tests.md` - Easy-to-read table with rankings
+
+**How answers are scored:**
+
+- **1.0**: Perfect answer
+- **0.8**: Good answer with small problems
+- **0.6**: Okay answer but missing some things
+- **0.4**: Poor answer with big problems
+- **0.2**: Very bad answer, mostly wrong
+- **0.0**: Completely wrong answer
+
+## Other Useful Commands
+
+**Do everything at once:**
 
 ```bash
 deno task all
 ```
 
-This will:
+Runs all steps: create data → train models → make charts → test models
 
-1. Generate training data from SDA documentation (skipped if already exists)
-2. Train all specified models with smart resumption and loss tracking
-3. Generate visualization charts
+**Clean up cache files:**
 
-The entire pipeline is designed to be resumable and will skip completed steps
-automatically.
+```bash
+deno task clean
+```
+
+Deletes temporary files to start fresh.
 
 Have fun!

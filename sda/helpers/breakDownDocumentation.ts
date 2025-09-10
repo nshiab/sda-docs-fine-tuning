@@ -43,5 +43,13 @@ export default function breakDownDocumentation(
 
   console.log("\nAll chuncks for SDA:", documentationChunksSda.length);
 
+  Deno.writeTextFileSync(
+    "./sda/output/documentationChunksSda.json",
+    JSON.stringify(documentationChunksSda, null, 2),
+  );
+  console.log(
+    "Saved documentation chunks to ./sda/output/documentationChunksSda.json",
+  );
+
   return documentationChunksSda;
 }

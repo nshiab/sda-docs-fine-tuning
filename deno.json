@@ -1,9 +1,10 @@
 {
   "tasks": {
-    "all": "deno task generate && deno task train && deno task charts",
+    "all": "deno task generate && deno task train && deno task charts && deno task test",
     "generate": "deno run --node-modules-dir=auto -A --check sda/generate.ts",
     "charts": "deno run --node-modules-dir=auto -A --check sda/charts.ts",
     "train": "deno run --node-modules-dir=auto -A --check sda/train.ts",
+    "test": "deno run --node-modules-dir=auto -A --check sda/test.ts",
     "clean": "rm -rf .sda-cache && rm -rf .journalism-cache && rm -rf .tmp"
   },
   "nodeModulesDir": "auto",

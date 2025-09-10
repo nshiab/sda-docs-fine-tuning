@@ -12,7 +12,6 @@ export default async function generateTrainingData(
     models.length * documentationChunksSda.length * roles.length,
     {
       prefix: "Estimated time remaining: ",
-      suffix: " until completion.",
     },
   );
 
