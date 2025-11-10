@@ -15,86 +15,87 @@ const models = [
     mlx: "mlx-community/gemma-3-270m-it-bf16",
     type: "dora",
   },
-  // {
-  //   name: "gemma3-270m-full",
-  //   mlx: "mlx-community/gemma-3-270m-it-bf16",
-  //   type: "full",
-  // },
-  // {
-  //   name: "gemma3-4b-lora",
-  //   mlx: "mlx-community/gemma-3-4b-it-bf16",
-  //   type: "lora",
-  // },
-  // {
-  //   name: "gemma3-4b-dora",
-  //   mlx: "mlx-community/gemma-3-4b-it-bf16",
-  //   type: "dora",
-  // },
-  // {
-  //   name: "gemma3-4b-full",
-  //   mlx: "mlx-community/gemma-3-4b-it-bf16",
-  //   type: "full",
-  // },
-  // {
-  //   name: "gemma3-12b-lora",
-  //   mlx: "mlx-community/gemma-3-12b-it-bf16",
-  //   type: "lora",
-  // },
-  // {
-  //   name: "gemma3-12b-8bit-dora",
-  //   mlx: "mlx-community/gemma-3-12b-it-qat-8bit", // Not enough memory for dora bf16 training
-  //   type: "dora",
-  // },
-  // {
-  //   name: "gemma3-12b-8bit-full",
-  //   mlx: "mlx-community/gemma-3-12b-it-qat-8bit", // Not enough memory for full bf16 training
-  //   type: "full",
-  // },
-  // {
-  //   name: "llama-3.2-1B-lora",
-  //   mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
-  //   type: "lora",
-  // },
-  // {
-  //   name: "llama-3.2-1B-dora",
-  //   mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
-  //   type: "dora",
-  // },
-  // {
-  //   name: "llama-3.2-1B-full",
-  //   mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
-  //   type: "full",
-  // },
-  // {
-  //   name: "llama-3.2-3B-lora",
-  //   mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
-  //   type: "lora",
-  // },
-  // {
-  //   name: "llama-3.2-3B-dora",
-  //   mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
-  //   type: "dora",
-  // },
-  // {
-  //   name: "llama-3.2-3B-full",
-  //   mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
-  //   type: "full",
-  // },
-  // {
-  //   name: "llama-3.1-8B-lora",
-  //   mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
-  //   type: "lora",
-  // },
-  // {
-  //   name: "llama-3.1-8B-dora",
-  //   mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
-  //   type: "dora",
-  // },
-  // {
-  //   name: "llama-3.1-8B-full",
-  //   mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
-  //   type: "full",
-  // },
+  {
+    name: "gemma3-270m-full",
+    mlx: "mlx-community/gemma-3-270m-it-bf16",
+    type: "full",
+  },
+  {
+    name: "gemma3-4b-lora",
+    mlx: "mlx-community/gemma-3-4b-it-bf16",
+    type: "lora",
+  },
+  {
+    name: "gemma3-4b-dora",
+    mlx: "mlx-community/gemma-3-4b-it-bf16",
+    type: "dora",
+  },
+  {
+    name: "gemma3-4b-full",
+    mlx: "mlx-community/gemma-3-4b-it-bf16",
+    type: "full",
+  },
+  {
+    name: "gemma3-12b-lora",
+    mlx: "mlx-community/gemma-3-12b-it-bf16",
+    type: "lora",
+  },
+  {
+    name: "gemma3-12b-8bit-dora",
+    mlx: "mlx-community/gemma-3-12b-it-qat-8bit", // Not enough memory for dora bf16 training
+    type: "dora",
+  },
+  {
+    name: "gemma3-12b-8bit-full",
+    mlx: "mlx-community/gemma-3-12b-it-qat-8bit", // Not enough memory for full bf16 training
+    type: "full",
+  },
+  {
+    name: "llama-3.2-1B-lora",
+    mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
+    type: "lora",
+  },
+  {
+    name: "llama-3.2-1B-dora",
+    mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
+    type: "dora",
+  },
+  {
+    name: "llama-3.2-1B-full",
+    mlx: "mlx-community/Llama-3.2-1B-Instruct-bf16",
+    type: "full",
+  },
+  {
+    name: "llama-3.2-3B-lora",
+    mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
+    type: "lora",
+  },
+  {
+    name: "llama-3.2-3B-dora",
+    mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
+    type: "dora",
+  },
+  {
+    name: "llama-3.2-3B-full",
+    mlx: "mlx-community/Llama-3.2-3B-Instruct-bf16",
+    type: "full",
+  },
+  {
+    name: "llama-3.1-8B-lora",
+    mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+    type: "lora",
+  },
+  {
+    name: "llama-3.1-8B-dora",
+    mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+    type: "dora",
+  },
+  {
+    name: "llama-3.1-8B-full",
+    mlx: "mlx-community/Meta-Llama-3.1-8B-Instruct-bf16",
+    type: "full",
+  },
+  // Not working?
   // {
   //   name: "mistral-7B-lora",
   //   mlx: "mlx-community/Mistral-7B-Instruct-v0.3",
