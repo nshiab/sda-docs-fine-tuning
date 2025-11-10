@@ -1,10 +1,14 @@
 export default async function promptFineTunedModel(
-  model: string,
+  model: {
+    name: string;
+    mlx: string;
+    type: string;
+  },
   adapterPath: string,
   prompt: string,
 ): Promise<string> {
   console.log(
-    `Prompting ${model} with: "${prompt}"`,
+    `Prompting ${model.name} with: "${prompt}"`,
   );
 
   const command = new Deno.Command("python3", {
@@ -12,7 +16,7 @@ export default async function promptFineTunedModel(
       "-m",
       "mlx_lm.generate",
       "--model",
-      model,
+      model.mlx,
       "--adapter-path",
       adapterPath,
       "--prompt",
@@ -93,7 +97,7 @@ export default async function promptFineTunedModel(
 
     return response;
   } catch (error) {
-    console.error(`Error running python command for ${model}:`, error);
+    console.error(`Error running python command for ${model.name}:`, error);
     return `Error: ${error instanceof Error ? error.message : String(error)}`;
   }
 }

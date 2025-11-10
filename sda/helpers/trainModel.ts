@@ -1,10 +1,14 @@
 export default async function trainModel(
-  model: string,
+  model: {
+    name: string;
+    mlx: string;
+    type: string;
+  },
   iterations: number,
 ) {
-  const adapterPath = `adapters/${model.split("/").pop()}`;
+  const start = Date.now();
 
-  console.log(`\nStarting training for ${model}...`);
+  const adapterPath = `models/${model.name}/adapters`;
 
   const losses: {
     iteration: number;
@@ -13,27 +17,33 @@ export default async function trainModel(
     learningRate?: number;
     tokensPerSec?: number;
     trainedTokens?: number;
+    model: string;
   }[] = [];
 
+  const args = [
+    "-m",
+    "mlx_lm.lora",
+    "--model",
+    model.mlx,
+    "--train",
+    "--data",
+    "sda/output",
+    "--adapter-path",
+    adapterPath,
+    "--iters",
+    iterations.toString(),
+    "--fine-tune-type",
+    model.type,
+  ];
+
+  console.log("Arguments:", args.join(" "));
+
   const command = new Deno.Command("python3", {
-    args: [
-      "-m",
-      "mlx_lm.lora",
-      "--model",
-      model,
-      "--train",
-      "--data",
-      "sda/output",
-      "--adapter-path",
-      adapterPath,
-      "--iters",
-      iterations.toString(),
-    ],
+    args,
     stdout: "piped",
     stderr: "piped",
   });
 
-  console.log(`\nTraining model: ${model}`);
   const process = command.spawn();
 
   // Read stdout line by line
@@ -62,22 +72,8 @@ export default async function trainModel(
             learningRate: parseFloat(trainMatch[3]),
             tokensPerSec: parseFloat(trainMatch[4]),
             trainedTokens: parseInt(trainMatch[5]),
+            model: model.name,
           });
-        }
-
-        // Parse validation loss lines
-        const valMatch = line.match(/Iter (\d+): Val loss ([\d.]+)/);
-        if (valMatch) {
-          const iter = parseInt(valMatch[1]);
-          const existingEntry = losses.find((l) => l.iteration === iter);
-          if (existingEntry) {
-            existingEntry.valLoss = parseFloat(valMatch[2]);
-          } else {
-            losses.push({
-              iteration: iter,
-              valLoss: parseFloat(valMatch[2]),
-            });
-          }
         }
       }
     }
@@ -100,8 +96,26 @@ export default async function trainModel(
   const { success } = await process.status;
 
   if (!success) {
-    throw new Error(`Training failed for ${model}`);
+    throw new Error(`Training failed for ${model.name}`);
   }
 
-  return losses;
+  const duration = Date.now() - start;
+  console.log(
+    `Completed training: ${model.name} (${
+      (duration / 1000 / 60).toFixed(1)
+    } minutes)\n`,
+  );
+  await Deno.writeTextFile(
+    `models/${model.name}/trainLoss.json`,
+    JSON.stringify(losses, null, 2),
+  );
+  console.log(`Saved training losses for ${model.name}\n`);
+  await Deno.writeTextFile(
+    `models/${model.name}/duration.json`,
+    JSON.stringify({
+      model: model.name,
+      duration: duration,
+    }),
+  );
+  console.log(`Saved training duration for ${model.name}\n`);
 }

@@ -23,11 +23,9 @@ Respond in this exact JSON format:
   "reasoning": "Brief explanation of the score"
 }
 
-Return only the JSON object, no additional text.
+Always return this JSON object only, no additional text. Double-check that the JSON is valid. Properly escape any quotes or double quotes in the reasoning.
 
 Here are some extra instructions that were given to the model when generating the response you are evaluationg. Use these to guide your evaluation:
-- For each question, you must provide a code example as your answer. You must add comments to the code to explain the steps. You must also add a brief, one-sentence explanation before the code example.
-- The answer should be grounded in the documentation provided. Do not make assumptions. Do not invent features or methods that do not exist.
 - Write simple and straightforward code examples. Don't create functions to encapsulate your code.
 - Your code examples should always be wrapped in triple backticks (\`\`\` at the beginning and \`\`\` at the end) for code blocks.
 - If the documentation section is about SimpleDB, make sure to wrap your code example with:
@@ -41,25 +39,30 @@ await sdb.done();
 \`\`\`
 - If the documentation section is about SimpleTable, make sure to wrap your code example with:
 \`\`\`
-// We start a SimpleDB instance
 import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
 const sdb = new SimpleDB();
 // We create a new table
 const table = sdb.newTable();
 [PUT YOUR CODE EXAMPLE HERE]
+// Log the first rows
+await table.logTable();
 // We close everything
 await sdb.done();
 \`\`\`
 - If the example requires data, load it using \`await table.loadData("path/to/your/data.csv");\` or \`await table.loadGeoData("path/to/your/geodata.geojson");\` for geospatial data.
 - Do not forget to add \`await sdb.done();\` at the end of your code.
 
-DOCUMENTATION:
+DOCUMENTATION TO USE AS REFERENCE:
+
 ${documentation}
 
-QUESTION:
+THE QUESTION THAT WAS ASKED:
+
 ${question}
 
-RESPONSE TO EVALUATE:
+THE RESPONSE TO EVALUATE:
+
 ${response}
 `;
 
@@ -93,6 +96,10 @@ ${response}
         thinkingBudget: 1,
         returnJson: false,
         parseJson: true,
+        clean: (response) =>
+          response.includes("```json")
+            ? response.split("```json")[1].split("```")[0].trim()
+            : response,
       },
     ) as { score: number; reasoning: string };
   }

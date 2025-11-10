@@ -1,8 +1,7 @@
 # Fine-tuning models with SDA documentation
 
-This project uses **Deno** (a TypeScript runtime) and **mlx-lm** (a Python
-package optimized for Apple Silicon chips) to train AI models using the
-[Simple Data Analysis](https://github.com/nshiab/simple-data-analysis)
+This project uses **Deno**, **mlx-lm**, and **Ollama** to train AI models using
+the [Simple Data Analysis](https://github.com/nshiab/simple-data-analysis)
 documentation.
 
 ## What you need first

@@ -30,8 +30,9 @@ const documentationChunksSda = breakDownDocumentation(sdaDocs, sample);
 const trainingDataPath = "./sda/output/trainingData.json";
 
 // Check if training data already exists
+// because this step takes a long time to run
 if (existsSync(trainingDataPath)) {
-  console.log("\nTraining data already exists. Skipping generation...");
+  console.log("\n3 - Training data already exists. Skipping generation...");
 
   // Load existing training data
   const existingData = JSON.parse(await Deno.readTextFile(trainingDataPath));

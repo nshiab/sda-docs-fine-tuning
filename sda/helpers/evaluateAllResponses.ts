@@ -1,99 +1,91 @@
+import { DurationTracker, prettyDuration } from "@nshiab/journalism";
 import evaluateResponse from "./evaluateResponse.ts";
-import type { ModelResponse } from "./loadCachedResponses.ts";
-
-export interface TestResult {
-  model: string;
-  question: string;
-  response: string;
-  evaluation: {
-    averageScore: number;
-    evaluatedBy: string;
-    details: Array<{
-      evaluationModel: string;
-      score: number;
-      reasoning: string;
-    }>;
-  };
-}
 
 export default async function evaluateAllResponses(
-  modelResponses: ModelResponse[],
+  modelResponses: {
+    model: string;
+    question: string;
+    response: string;
+  }[],
   evaluationModels: string[],
-  verbose: boolean = false,
-): Promise<TestResult[]> {
-  const evaluationResults = new Map<
-    string,
-    Array<{
-      evaluationModel: string;
-      score: number;
-      reasoning: string;
-    }>
-  >();
+  questions: {
+    question: string;
+    keyword: string[];
+  }[],
+) {
+  console.log(`\nEvaluating responses from ${modelResponses[0].model}...`);
 
+  const totalEvaluations = evaluationModels.length * modelResponses.length;
+  const tracker = new DurationTracker(totalEvaluations, {
+    prefix: "Estimated time remaining: ",
+  });
+
+  const evaluationResults = [];
+
+  let evaluationCount = 1;
+
+  const documentationChunks = JSON.parse(Deno.readTextFileSync(
+    "sda/output/documentationChunksSda.json",
+  )) as string[];
+
+  const startEvaluation = new Date();
   for (const evalModel of evaluationModels) {
-    console.log(`\nEvaluating all responses with ${evalModel}...\n`);
+    console.log(`\nEvaluating responses with ${evalModel}...\n`);
 
     for (const responseData of modelResponses) {
-      const key = `${responseData.model}:${responseData.question}`;
-
-      const evaluation = await evaluateResponse(
-        responseData.question,
-        responseData.response,
-        responseData.documentation,
-        evalModel,
+      console.log(
+        `\n${evaluationCount} / ${totalEvaluations} - ${evalModel} evaluating ${responseData.model} response`,
       );
 
-      if (!evaluationResults.has(key)) {
-        evaluationResults.set(key, []);
+      const keywords = questions.find((q) =>
+        q.question === responseData.question
+      )?.keyword || [];
+
+      const documentation = documentationChunks.filter((chunk) =>
+        keywords.some((kw) => chunk.toLowerCase().includes(kw.toLowerCase()))
+      ).join("\n\n");
+
+      tracker.start();
+
+      try {
+        const evaluation = await evaluateResponse(
+          responseData.question,
+          responseData.response,
+          documentation,
+          evalModel,
+        );
+        // console.log(`\nQuestion: ${responseData.question}`);
+        // console.log(`Response: ${responseData.response}`);
+        console.log(`Score: ${evaluation.score}`);
+        // console.log(`Reasoning: ${evaluation.reasoning}`);
+
+        evaluationResults.push(
+          {
+            model: responseData.model,
+            question: responseData.question,
+            response: responseData.response,
+            evaluationModel: evalModel,
+            score: evaluation.score,
+            scoreReasoning: evaluation.reasoning,
+          },
+        );
+      } catch (error) {
+        console.error("Error during evaluation:", error);
       }
 
-      const current = evaluationResults.get(key)!;
-      current.push({
-        evaluationModel: evalModel,
-        score: evaluation.score,
-        reasoning: evaluation.reasoning,
-      });
-
-      if (verbose) {
-        console.log(
-          `${responseData.modelName} - ${responseData.question}`,
-        );
-        console.log(`Response: ${responseData.response}`);
-        console.log(
-          `Score: ${evaluation.score} - Reasoning: ${evaluation.reasoning}`,
-        );
-      }
+      evaluationCount++;
+      tracker.log();
     }
   }
 
-  // Create final results with averaged scores
-  const allResults: TestResult[] = [];
+  Deno.writeTextFileSync(
+    `models/${modelResponses[0].model}/validation.json`,
+    JSON.stringify(evaluationResults, null, 2),
+  );
+  console.log(`\nEvaluation results saved for ${modelResponses[0].model}`);
 
-  for (const responseData of modelResponses) {
-    const key = `${responseData.model}:${responseData.question}`;
-    const evaluationDetails = evaluationResults.get(key) || [];
-
-    const totalScore = evaluationDetails.reduce(
-      (sum, detail) => sum + detail.score,
-      0,
-    );
-    const averageScore = evaluationDetails.length > 0
-      ? totalScore / evaluationDetails.length
-      : 0;
-
-    const result: TestResult = {
-      model: responseData.modelName,
-      question: responseData.question,
-      response: responseData.response,
-      evaluation: {
-        averageScore: Math.round(averageScore * 100) / 100,
-        evaluatedBy: evaluationModels.join(", "),
-        details: evaluationDetails,
-      },
-    };
-
-    allResults.push(result);
-  }
-
-  return allResults;
+  prettyDuration(startEvaluation, {
+    log: true,
+    prefix: "Evaluation took ",
+  });
 }

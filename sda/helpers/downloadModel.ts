@@ -1,4 +1,5 @@
 export default async function downloadModel(model: string) {
+  console.log(`\nDownloading/testing model: ${model}...`);
   const command = new Deno.Command("python3", {
     args: [
       "-m",
@@ -18,5 +19,5 @@ export default async function downloadModel(model: string) {
     throw new Error(`Model download failed for ${model}`);
   }
 
-  console.log(`Model downloaded: ${model}`);
+  console.log(`${model} downloaded/tested successfully.`);
 }

@@ -54,12 +54,14 @@ await sdb.done();
 
 If the documentation section is about SimpleTable, make sure to wrap your code example with:
 \`\`\`
-// We start a SimpleDB instance
 import { SimpleDB } from "@nshiab/simple-data-analysis";
+// We start a SimpleDB instance
 const sdb = new SimpleDB();
 // We create a new table
 const table = sdb.newTable();
 [PUT YOUR CODE EXAMPLE HERE]
+// Log the first rows
+await table.logTable();
 // We close everything
 await sdb.done();
 \`\`\`
