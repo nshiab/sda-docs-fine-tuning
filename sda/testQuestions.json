@@ -1,0 +1,93 @@
+[
+  { "question": "How can I open a CSV file?", "keyword": ["#### `loadData`"] },
+  {
+    "question": "I have a table with two columns: province and fireId. How can I count the number of fires per province?",
+    "keyword": ["#### `summarize`", "#### `loadData`"]
+  },
+  {
+    "question": "I would like to compute the mininimum, average and maximum of a column called 'grade', for each group indicated in a column 'classroom', with two decimal places.",
+    "keyword": ["#### `summarize`", "#### `loadData`"]
+  },
+  {
+    "question": "Show me how to quickly find the unique values in a column 'city'.",
+    "keyword": ["#### `getUniques`", "#### `logUniques`", "#### `loadData`"]
+  },
+  {
+    "question": "Tell me how to get the standard deviation of a column 'age'.",
+    "keyword": ["#### `summarize`", "#### `getStdDev`", "#### `loadData`"]
+  },
+  {
+    "question": "Is there an easy way to remove missing values?",
+    "keyword": ["#### `removeMissing`", "#### `loadData`"]
+  },
+  {
+    "question": "How can I unpivot my data?",
+    "keyword": ["#### `longer`", "#### `loadData`"]
+  },
+  {
+    "question": "I want to remove duplicates on the column 'email'.",
+    "keyword": ["#### `removeDuplicates`", "#### `loadData`"]
+  },
+  {
+    "question": "Is there a way to calculate correlations between columns?",
+    "keyword": ["#### `correlations`", "#### `loadData`"]
+  },
+  {
+    "question": "Give an example of a join between two tables.",
+    "keyword": ["#### `join`", "#### `loadData`"]
+  },
+  {
+    "question": "How to filter rows by a condition?",
+    "keyword": [
+      "#### `filter`",
+      "#### `keep`",
+      "#### `remove`",
+      "#### `loadData`"
+    ]
+  },
+  {
+    "question": "How can I rename the column 'Temperature (°C)' to 'temp'?",
+    "keyword": ["#### `renameColumns`", "#### `loadData`"]
+  },
+  {
+    "question": "How to sort the data by the column 'date' in descending order?",
+    "keyword": ["#### `sort`", "#### `loadData`"]
+  },
+  {
+    "question": "How to calculate the moving average of the column 'sales' with a window of 7 days?",
+    "keyword": ["#### `rolling`", "#### `loadData`"]
+  },
+  {
+    "question": "How can I open a geojson file and fix the errors in its geometries?",
+    "keyword": ["#### `fixGeo`", "#### `loadGeoData`"]
+  },
+  {
+    "question": "I have a table with points and another one with polygons. How can I join the points with the polygons they fall into?",
+    "keyword": ["#### `joinGeo`", "#### `loadGeoData`"]
+  },
+  {
+    "question": "Show me how to simplify the geometries in the column 'location'.",
+    "keyword": ["#### `simplify`", "#### `loadGeoData`"]
+  },
+  {
+    "question": "Can I use an AI model to categorize the data in the column 'customer_complaints'?",
+    "keyword": ["#### `aiRowByRow`", "#### `loadData`"]
+  },
+  {
+    "question": "I want to create a simple chart in the terminal to visualize my data.",
+    "keyword": [
+      "#### `logBarChart`",
+      "#### `logLineChart`",
+      "#### `logDotChart`",
+      "#### `loadData`"
+    ]
+  },
+  {
+    "question": "I want to write my data to a parquet file. How?",
+    "keyword": ["#### `writeData`", "#### `loadData`"]
+  },
+  {
+    "question": "I want to write my geospatial data to a geojson file. How?",
+    "keyword": ["#### `writeGeoData`", "#### `loadGeoData`"]
+  }
+]

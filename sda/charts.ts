@@ -8,6 +8,8 @@ import {
   text,
   textX,
 } from "@observablehq/plot";
+import models from "./models.json" with { type: "json" };
+import testQuestions from "./testQuestions.json" with { type: "json" };
 
 const sdb = new SimpleDB();
 
@@ -17,15 +19,21 @@ await durations.updateColumn("duration", `ROUND(duration / 1000)`); // Convert m
 await durations.logTable();
 await durations.writeChart((data) =>
   plot({
+    title: "Training durations",
     x: {
-      ticks: 0,
+      grid: true,
+      tickFormat: (d) => {
+        const hours = Math.floor(d / 3600);
+        return `${hours}h`;
+      },
+      ticks: [3600, 7200, 10800, 14400],
       label: null,
     },
     y: {
       label: null,
     },
-    marginLeft: 175,
-    marginRight: 100,
+    marginLeft: 120,
+    marginRight: 60,
     marks: [
       barX(data, {
         y: "model",
@@ -60,12 +68,32 @@ const trainingLossOverTime = await sdb.newTable("trainingLossOverTime")
     "models/**/trainLoss.json",
   );
 await trainingLossOverTime.sort({ "iteration": "asc" });
+await trainingLossOverTime.bins("iteration", 100, "iterationBin", {
+  startValue: 0,
+});
+await trainingLossOverTime.splitExtract(
+  "iterationBin",
+  "-",
+  1,
+  "iterationExtracted",
+);
+await trainingLossOverTime.replace("iterationExtracted", { "]": "" });
+await trainingLossOverTime.convert({ iterationExtracted: "number" });
+await trainingLossOverTime.summarize({
+  values: "trainLoss",
+  categories: ["model", "iterationExtracted"],
+  summaries: { trainLoss: "mean" },
+  noColumnValue: true,
+});
+await trainingLossOverTime.renameColumns({ iterationExtracted: "iteration" });
+await trainingLossOverTime.filter(`iteration >= 1000`);
 await trainingLossOverTime.logTable();
 await trainingLossOverTime.writeChart((data) =>
   plot({
+    title: "Average training loss over time, starting from iteration 1000",
     grid: true,
     inset: 10,
-    marginRight: 175,
+    marginRight: 100,
     marks: [
       line(data, {
         x: "iteration",
@@ -105,40 +133,8 @@ const finalTrainingLoss = await sdb.newTable("finalTrainingLoss")
     "models/**/trainLoss.json",
   );
 await finalTrainingLoss.keep({ iteration: 5000 });
+await finalTrainingLoss.selectColumns(["model", "trainLoss"]);
 await finalTrainingLoss.logTable();
-await finalTrainingLoss.writeChart((data) =>
-  plot({
-    x: {
-      ticks: 0,
-      label: null,
-    },
-    y: {
-      label: null,
-    },
-    marginLeft: 175,
-    marginRight: 100,
-    marks: [
-      barX(data, {
-        y: "model",
-        x: "trainLoss",
-        fill: "orange",
-        sort: {
-          y: "x",
-        },
-      }),
-      textX(data, {
-        x: "trainLoss",
-        y: "model",
-        text: "trainLoss",
-        fill: "black",
-        textAnchor: "start",
-        dx: 5,
-      }),
-    ],
-  }), "sda/output/finalTrainingLoss.png");
-console.log(
-  "Final training loss chart saved to sda/output/finalTrainingLoss.png",
-);
 
 const results = sdb.newTable("results");
 await results.loadData("models/**/validation.json");
@@ -151,6 +147,7 @@ await results.summarize({
   noColumnValue: true,
 });
 await results.logTable();
+
 // Just to show the results in the console
 const showResults = await results.cloneTable("showResults");
 await showResults.wider("model", "mean");
@@ -161,39 +158,75 @@ await results.summarize({
   categories: "model",
   summaries: { overallScore: "sum" },
   decimals: 1,
+  noColumnValue: true,
 });
-await results.logTable();
-await results.writeChart((data) =>
-  plot({
-    x: {
-      ticks: 0,
-      label: null,
-    },
-    y: {
-      label: null,
-    },
-    marginLeft: 175,
-    marginRight: 100,
-    marks: [
-      barX(data, {
-        y: "model",
-        x: "overallScore",
-        fill: "orange",
-        sort: {
-          y: "x",
-        },
-      }),
-      textX(data, {
-        x: "overallScore",
-        y: "model",
-        text: "overallScore",
-        fill: "black",
-        textAnchor: "start",
-        dx: 5,
-      }),
-    ],
-  }), "sda/output/results.png");
-console.log(
-  "Results chart saved to sda/output/results.png",
+await results.updateColumn(
+  "overallScore",
+  `ROUND(overallScore / ${testQuestions.length}, 2)`,
 );
+await results.logTable();
+
+const modelsTable = await sdb.newTable("modelsTable").loadArray(models);
+await modelsTable.renameColumns({ name: "model" });
+await modelsTable.logTable();
+
+// We put everything together
+const finalTable = await results.cloneTable("finalTable");
+await finalTable.join(finalTrainingLoss);
+await finalTable.join(modelsTable);
+await finalTable.logTable();
+await finalTable.writeChart(
+  (data) =>
+    plot({
+      title: "Training loos vs Overall score",
+      subtitle: "Size of the dot represents model size in number of parameters",
+      r: {
+        range: [2, 30],
+      },
+      grid: true,
+      inset: 30,
+      color: {
+        legend: true,
+      },
+      marks: [
+        dot(data, {
+          x: "trainLoss",
+          y: "overallScore",
+          r: "size",
+          stroke: "type",
+          fill: "type",
+          fillOpacity: 0.5,
+        }),
+        text(
+          data,
+          {
+            x: "trainLoss",
+            y: "overallScore",
+            text: (d) => {
+              const modelName = d.model.replace("-lora", "").replace(
+                "-dora",
+                "",
+              ).replace(
+                "-full",
+                "",
+              ).split("-").slice(0, -1).join("-");
+              const modelSize = d.model.replace("-lora", "").replace(
+                "-dora",
+                "",
+              ).replace(
+                "-full",
+                "",
+              ).split("-").pop();
+              return `${modelName}\n${modelSize}`;
+            },
+            stroke: "white",
+            fill: "black",
+          },
+        ),
+      ],
+    }),
+  "sda/output/finalTable.png",
+);
+console.log("Final table chart saved to sda/output/finalTable.png");
+
 await sdb.done();
